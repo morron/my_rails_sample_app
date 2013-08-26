@@ -4,10 +4,10 @@ describe "UserPages" do
 
   subject { page }
 
-  describe "singup page" do
-  	before { visit  singup_path }
+  describe "signup page" do
+  	before { visit  signup_path }
 
-  	it { should have_selector('h1', text: 'Sing up') }
+  	it { should have_selector('h1', text: 'Sign up') }
   	it { should have_selector('title', text: full_title('')) }
   end
 
@@ -21,13 +21,20 @@ describe "UserPages" do
 
   describe "signup" do
 
-    before { visit  singup_path }
+    before { visit  signup_path }
 
     let(:submit) { "Create my account" }
 
     describe "with invalid information" do
       it "should not create a user" do
         expect { click_button submit }.not_to change(User, :count)
+      end
+
+      describe "after submission" do
+        before { click_button submit }
+
+        it { should have_selector('title', text: 'Sign up') }
+        it { should have_content('error') }
       end
     end
 
